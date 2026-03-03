@@ -46,19 +46,19 @@
 
   <p>Your AI session didn't cost $400 because it was brilliant. It cost $400 because it kept re-reading itself.</p>
 
-  <p>Most engineers don't know this because the bill arrives as an opaque monthly total with no breakdown by session, by conversation, or by mistake. We ran the numbers on a real 57MB session with 25 compaction events.</p>
+  <p>Most engineers don't know this because the bill arrives as an opaque monthly total with no breakdown by session, by conversation, or by mistake. We ran the numbers on a real 57MB session with 25 compaction events. Total cost: $368.45.</p>
 
   <span class="stat">83% of the cost wasn't thinking. It was re-thinking.<em>Cache reads — the model re-processing the same context every turn</em></span>
 
   <span class="stat">$32 for a debugging detour<em>Later compacted away — the work vanished, the bill didn't</em></span>
 
-  <span class="stat">Cost per epoch: $2.52 to $32.03<em>Epochs are the periods between compaction events — each one has wildly different economics</em></span>
+  <span class="stat">The cheapest epoch cost $2.52. The most expensive: $32.03.<em>Epochs — the periods between compaction events — have wildly different economics</em></span>
 
   <p>Long AI sessions have three invisible taxes. Understanding them is the first step to controlling them.</p>
 
   <h2>Tax 1: The re-read tax</h2>
 
-  <p>The context window is not memory. It is a recurring expense. Every token you keep is a token you pay to re-read on every subsequent turn. Every compaction is a lossy compression event that erases specificity. After ten compactions, the model is reasoning from a summary of a summary of a summary — and you're paying full price for degraded output.</p>
+  <p>The context window is not memory. It is a recurring expense. Every token you keep is a token you pay to re-read on every subsequent turn. Every compaction is a lossy compression event that erases specificity. After ten compactions, the model is reasoning from a summary of a summary of a summary — while you continue paying full price for less precise thinking.</p>
 
   <p>The CLI shows <span class="highlight">ctx:41%</span> — a single number. It doesn't tell you what's filling it, how much it costs, or what happens when compaction triggers. It certainly doesn't tell you that the 15-minute tangent into an unrelated repository just displaced 34K tokens of your actual project context.</p>
 
@@ -72,7 +72,7 @@
 
   <p><span class="highlight">Operational</span> — forward-only execution. You're implementing the decision. The exploration that got you here is now noise.</p>
 
-  <p>Claude Code mixes all three permanently. Once you've decided, the scaffolding that got you there doesn't just waste tokens — it biases future responses. The model sees your rejected approaches and old reasoning alongside your final decision. That's not token waste. That's <span class="highlight">reasoning contamination</span>.</p>
+  <p>Claude Code mixes all three permanently. Once you've decided, the scaffolding that got you there doesn't just waste tokens — it biases future responses. The model sees your rejected approaches and old reasoning alongside your final decision. That's not token waste. That's <span class="highlight">reasoning contamination</span>. And contamination compounds.</p>
 
   <h2>Tax 3: The re-explanation tax</h2>
 
@@ -92,7 +92,7 @@
 
   <p><strong>Keep conclusions, remove scaffolding.</strong> After a decision is made, the exploration that got you there becomes dead weight. Collapse exploration into decisions.</p>
 
-  <p><strong>Clean at decision boundaries, not when the window is full.</strong> By the time you're at 90%, compaction is imminent and you've lost control over what gets compressed.</p>
+  <p><strong>Clean at decision boundaries, not when the window is full.</strong> By the time you're at 90%, compaction is imminent and you've lost control over what gets compressed. Waiting until 90% is like refactoring only when production is on fire.</p>
 
   <p><strong>Separate exploration from execution.</strong> Exploratory reasoning in one session, structured execution in another. The exploration session can be messy — the execution session carries forward only the decisions.</p>
 
@@ -100,7 +100,7 @@
 
   <h2>What we needed</h2>
 
-  <p>We needed visibility. So we built <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>. It reads Claude Code's local session files and gives you control over what fills your context window — what it costs, what's noise, and what happens if you remove it.</p>
+  <p>We wanted visibility into where reasoning and money were going. So we built <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>. It reads Claude Code's local session files and gives you control over what fills your context window — what it costs, what's noise, and what happens if you remove it.</p>
 
   <p>It doesn't use AI to analyze your sessions. It uses structural signals: token counts, file paths, compaction boundaries, cost attribution from actual usage data. When it doesn't know something, it says so.</p>
 
