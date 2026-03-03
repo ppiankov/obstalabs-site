@@ -44,23 +44,25 @@
   <h1>Your AI Session Costs $400. Here's Where the Money Goes.</h1>
   <p class="meta">March 2026 &middot; Obsta Labs</p>
 
-  <p>A single Claude Code session on a large project can cost $400. Not over a month — in one sitting. Most engineers don't know this because the bill arrives as an opaque monthly total with no breakdown by session, by conversation, or by mistake.</p>
+  <p>Your AI session didn't cost $400 because it was brilliant. It cost $400 because it kept re-reading itself.</p>
 
-  <p>We ran the numbers on a real 57MB session with 25 compaction events.</p>
+  <p>Most engineers don't know this because the bill arrives as an opaque monthly total with no breakdown by session, by conversation, or by mistake. We ran the numbers on a real 57MB session with 25 compaction events.</p>
 
-  <span class="stat">83% of the cost was cache reads<em>The model re-processing the same context every turn</em></span>
+  <span class="stat">83% of the cost wasn't thinking. It was re-thinking.<em>Cache reads — the model re-processing the same context every turn</em></span>
 
   <span class="stat">$32 for a debugging detour<em>Later compacted away — the work vanished, the bill didn't</em></span>
 
   <span class="stat">Cost per epoch: $2.52 to $32.03<em>Epochs are the periods between compaction events — each one has wildly different economics</em></span>
 
-  <h2>The context window is an economic problem</h2>
+  <p>Long AI sessions have three invisible taxes. Understanding them is the first step to controlling them.</p>
 
-  <p>Every token you keep is a token you pay to re-read on every subsequent turn. Every compaction is a lossy compression event that erases specificity. After ten compactions, the model is reasoning from a summary of a summary of a summary — and you're paying full price for degraded output.</p>
+  <h2>Tax 1: The re-read tax</h2>
+
+  <p>The context window is not memory. It is a recurring expense. Every token you keep is a token you pay to re-read on every subsequent turn. Every compaction is a lossy compression event that erases specificity. After ten compactions, the model is reasoning from a summary of a summary of a summary — and you're paying full price for degraded output.</p>
 
   <p>The CLI shows <span class="highlight">ctx:41%</span> — a single number. It doesn't tell you what's filling it, how much it costs, or what happens when compaction triggers. It certainly doesn't tell you that the 15-minute tangent into an unrelated repository just displaced 34K tokens of your actual project context.</p>
 
-  <h2>Not all context ages equally</h2>
+  <h2>Tax 2: The compaction tax</h2>
 
   <p>LLM sessions have three reasoning phases:</p>
 
@@ -72,9 +74,11 @@
 
   <p>Claude Code mixes all three permanently. Once you've decided, the scaffolding that got you there doesn't just waste tokens — it biases future responses. The model sees your rejected approaches and old reasoning alongside your final decision. That's not token waste. That's <span class="highlight">reasoning contamination</span>.</p>
 
-  <h2>Scope drift: the invisible session killer</h2>
+  <h2>Tax 3: The re-explanation tax</h2>
 
   <p>Here's a pattern we see in every long session: you're working on Project A. A question comes up about Project B. You check a file, read a config, ask a follow-up. Twenty minutes later, compaction triggers. The summary is about Project B — because that's what filled the recent context. Project A's architecture, decisions, and constraints got compressed into a sentence.</p>
+
+  <p>The model did exactly what you told it to do. You just didn't mean to tell it that.</p>
 
   <p>Now you're paying the <span class="highlight">re-explanation tax</span>: re-reading the same files, re-stating the same constraints, re-establishing the same context you had an hour ago. This tax is invisible and cumulative. Over a multi-day project spanning dozens of sessions, it can exceed the cost of the actual productive work.</p>
 
@@ -94,9 +98,9 @@
 
   <p><strong>Track where the money goes.</strong> Tokens are abstract. Percentages are abstract. Dollars are visceral. Knowing that a debugging detour cost $32 changes behavior faster than knowing you were at 82% context usage.</p>
 
-  <h2>What we're building</h2>
+  <h2>What we needed</h2>
 
-  <p>We built <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a> to make reasoning hygiene practical. It reads Claude Code's local session files and gives you visibility and control over what fills your context window — what it costs, what's noise, and what happens if you remove it.</p>
+  <p>We needed visibility. So we built <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>. It reads Claude Code's local session files and gives you control over what fills your context window — what it costs, what's noise, and what happens if you remove it.</p>
 
   <p>It doesn't use AI to analyze your sessions. It uses structural signals: token counts, file paths, compaction boundaries, cost attribution from actual usage data. When it doesn't know something, it says so.</p>
 
