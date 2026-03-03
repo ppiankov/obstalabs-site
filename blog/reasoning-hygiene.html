@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your AI Session Costs $400. Here's Where the Money Goes. — Obsta Labs</title>
+  <meta name="description" content="A single Claude Code session can cost hundreds of dollars. Most engineers don't know why. We ran the numbers.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0E1116;
+      color: #CDD6E0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.3; }
+    h2 { font-size: 1.1rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    p { margin-bottom: 1rem; color: #CDD6E0; }
+    a { color: #CDD6E0; }
+    .meta { color: #7C8590; font-size: 0.85rem; margin-bottom: 2rem; }
+    .back { color: #7C8590; font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid transparent; display: inline-block; margin-bottom: 2rem; }
+    .back:hover { border-bottom-color: #7C8590; }
+    .highlight { color: #E6EDF3; }
+    .stat { font-size: 1.2rem; font-weight: 600; color: #E6EDF3; display: block; margin: 1.5rem 0; padding: 1rem; border-left: 2px solid #3B414A; }
+    .stat em { color: #7C8590; font-weight: 400; font-style: normal; font-size: 0.9rem; display: block; margin-top: 0.25rem; }
+    blockquote { border-left: 2px solid #3B414A; padding-left: 1rem; color: #7C8590; margin: 1.5rem 0; font-style: italic; }
+    .tool-link { margin-top: 2.5rem; padding: 1.25rem; border: 1px solid #3B414A; border-radius: 4px; }
+    .tool-link a { font-weight: 600; text-decoration: none; border-bottom: 1px solid #3B414A; }
+    .tool-link a:hover { border-bottom-color: #7C8590; }
+    .tool-link p { color: #7C8590; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; }
+    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #3B414A; }
+    .footer a { color: #7C8590; font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid transparent; }
+    .footer a:hover { border-bottom-color: #7C8590; }
+    .footer span { color: #3B414A; margin: 0 0.5rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="back">&larr; Obsta Labs</a>
+
+  <h1>Your AI Session Costs $400. Here's Where the Money Goes.</h1>
+  <p class="meta">March 2026 &middot; Obsta Labs</p>
+
+  <p>A single Claude Code session on a large project can cost $400. Not over a month — in one sitting. Most engineers don't know this because the bill arrives as an opaque monthly total with no breakdown by session, by conversation, or by mistake.</p>
+
+  <p>We ran the numbers on a real 57MB session with 25 compaction events.</p>
+
+  <span class="stat">83% of the cost was cache reads<em>The model re-processing the same context every turn</em></span>
+
+  <span class="stat">$32 for a debugging detour<em>Later compacted away — the work vanished, the bill didn't</em></span>
+
+  <span class="stat">Cost per epoch: $2.52 to $32.03<em>Epochs are the periods between compaction events — each one has wildly different economics</em></span>
+
+  <h2>The context window is an economic problem</h2>
+
+  <p>Every token you keep is a token you pay to re-read on every subsequent turn. Every compaction is a lossy compression event that erases specificity. After ten compactions, the model is reasoning from a summary of a summary of a summary — and you're paying full price for degraded output.</p>
+
+  <p>The CLI shows <span class="highlight">ctx:41%</span> — a single number. It doesn't tell you what's filling it, how much it costs, or what happens when compaction triggers. It certainly doesn't tell you that the 15-minute tangent into an unrelated repository just displaced 34K tokens of your actual project context.</p>
+
+  <h2>Not all context ages equally</h2>
+
+  <p>LLM sessions have three reasoning phases:</p>
+
+  <p><span class="highlight">Exploratory</span> — temporary, unstable. You're trying approaches, reading files, asking questions. This is scaffolding.</p>
+
+  <p><span class="highlight">Decision</span> — the commit point. You've decided on an approach, an architecture, a fix. This is signal.</p>
+
+  <p><span class="highlight">Operational</span> — forward-only execution. You're implementing the decision. The exploration that got you here is now noise.</p>
+
+  <p>Claude Code mixes all three permanently. Once you've decided, the scaffolding that got you there doesn't just waste tokens — it biases future responses. The model sees your rejected approaches and old reasoning alongside your final decision. That's not token waste. That's <span class="highlight">reasoning contamination</span>.</p>
+
+  <h2>Scope drift: the invisible session killer</h2>
+
+  <p>Here's a pattern we see in every long session: you're working on Project A. A question comes up about Project B. You check a file, read a config, ask a follow-up. Twenty minutes later, compaction triggers. The summary is about Project B — because that's what filled the recent context. Project A's architecture, decisions, and constraints got compressed into a sentence.</p>
+
+  <p>Now you're paying the <span class="highlight">re-explanation tax</span>: re-reading the same files, re-stating the same constraints, re-establishing the same context you had an hour ago. This tax is invisible and cumulative. Over a multi-day project spanning dozens of sessions, it can exceed the cost of the actual productive work.</p>
+
+  <h2>The practice: reasoning hygiene</h2>
+
+  <p>This is not a tooling problem. It's a practice problem.</p>
+
+  <p>The fix is not bigger context windows — those just delay compaction while increasing cache read costs. The fix is treating your context window the way you treat your codebase: with intentional decisions about what stays and what gets removed.</p>
+
+  <p>We call this <span class="highlight">reasoning hygiene</span>:</p>
+
+  <p><strong>Keep conclusions, remove scaffolding.</strong> After a decision is made, the exploration that got you there becomes dead weight. Collapse exploration into decisions.</p>
+
+  <p><strong>Clean at decision boundaries, not when the window is full.</strong> By the time you're at 90%, compaction is imminent and you've lost control over what gets compressed.</p>
+
+  <p><strong>Separate exploration from execution.</strong> Exploratory reasoning in one session, structured execution in another. The exploration session can be messy — the execution session carries forward only the decisions.</p>
+
+  <p><strong>Track where the money goes.</strong> Tokens are abstract. Percentages are abstract. Dollars are visceral. Knowing that a debugging detour cost $32 changes behavior faster than knowing you were at 82% context usage.</p>
+
+  <h2>What we're building</h2>
+
+  <p>We built <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a> to make reasoning hygiene practical. It reads Claude Code's local session files and gives you visibility and control over what fills your context window — what it costs, what's noise, and what happens if you remove it.</p>
+
+  <p>It doesn't use AI to analyze your sessions. It uses structural signals: token counts, file paths, compaction boundaries, cost attribution from actual usage data. When it doesn't know something, it says so.</p>
+
+  <div class="tool-link">
+    <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>
+    <p>Reasoning hygiene layer for Claude Code. Open source, MIT licensed.</p>
+  </div>
+
+  <div class="footer">
+    <a href="/">Obsta Labs</a>
+    <span>/</span>
+    <a href="https://github.com/ppiankov">GitHub</a>
+    <span>/</span>
+    <a href="mailto:hello@obstalabs.dev">Contact</a>
+  </div>
+
+</body>
+</html>
