@@ -71,6 +71,8 @@
 
   <p>No model currently emits an explicit decision signal. There is no <span class="highlight">DECISION_COMMIT</span> marker in the token stream. But the boundary is detectable. Reasoning entropy drops. The model shifts from generating questions to generating code. Hypothesis branching narrows. The signals are indirect, but they're consistent &mdash; and they're already measurable from the outside, without access to model internals.</p>
 
+  <p>The boundary leaves observable traces in the transcript. Tool usage shifts from exploration &mdash; search, read, compare &mdash; to execution: write, patch, test. Hypothesis language disappears and imperative language appears. The model stops asking "what if" and starts emitting diffs.</p>
+
   <p>This is the metric that <a href="/blog/decision-economics">Decision Economics</a> pointed toward but couldn't yet deliver: <span class="highlight">cost per decision</span>. Not cost per token. Not cost per line of code. The cost of each intellectual commitment the system made on your behalf.</p>
 
   <span class="stat">Total tokens: 14.2M &rarr; Decisions: 7<em>~2M tokens per commitment &mdash; a KPI no dashboard tracks yet</em></span>
