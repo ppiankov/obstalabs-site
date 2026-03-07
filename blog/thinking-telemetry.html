@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your AI Explored Seven Architectures. You Only Saw One. — Obsta Labs</title>
+  <meta name="description" content="Session telemetry shows tokens spent. It says nothing about what the model decided or how many alternatives it explored. The missing layer is decision observability.">
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Your AI Explored Seven Architectures. You Only Saw One.">
+  <meta property="og:description" content="Session telemetry shows tokens spent. It says nothing about what the model decided or how many alternatives it explored. The missing layer is decision observability.">
+  <meta property="og:url" content="https://obstalabs.dev/blog/thinking-telemetry">
+  <meta property="og:site_name" content="Obsta Labs">
+  <!-- Twitter/X -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Your AI Explored Seven Architectures. You Only Saw One.">
+  <meta name="twitter:description" content="Session telemetry shows tokens spent. It says nothing about what the model decided or how many alternatives it explored.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0E1116;
+      color: #CDD6E0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.3; }
+    h2 { font-size: 1.1rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    p { margin-bottom: 1rem; color: #CDD6E0; }
+    a { color: #CDD6E0; }
+    .meta { color: #7C8590; font-size: 0.85rem; margin-bottom: 2rem; }
+    .back { color: #7C8590; font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid transparent; display: inline-block; margin-bottom: 2rem; }
+    .back:hover { border-bottom-color: #7C8590; }
+    .highlight { color: #E6EDF3; }
+    .stat { font-size: 1.2rem; font-weight: 600; color: #E6EDF3; display: block; margin: 1.5rem 0; padding: 1rem; border-left: 2px solid #3B414A; }
+    .stat em { color: #7C8590; font-weight: 400; font-style: normal; font-size: 0.9rem; display: block; margin-top: 0.25rem; }
+    blockquote { border-left: 2px solid #3B414A; padding-left: 1rem; color: #7C8590; margin: 1.5rem 0; font-style: italic; }
+    .tool-link { margin-top: 2.5rem; padding: 1.25rem; border: 1px solid #3B414A; border-radius: 4px; }
+    .tool-link a { font-weight: 600; text-decoration: none; border-bottom: 1px solid #3B414A; }
+    .tool-link a:hover { border-bottom-color: #7C8590; }
+    .tool-link p { color: #7C8590; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; }
+    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #3B414A; }
+    .footer a { color: #7C8590; font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid transparent; }
+    .footer a:hover { border-bottom-color: #7C8590; }
+    .footer span { color: #3B414A; margin: 0 0.5rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="back">&larr; Obsta Labs</a>
+
+  <h1>Your AI Explored Seven Architectures. You Only Saw One.</h1>
+  <p class="meta">The missing layer between token accounting and decision observability.</p>
+  <p class="meta">March 2026 &middot; Obsta Labs</p>
+
+  <p>Your session telemetry shows tokens in, tokens out, total cost. That's accounting. It tells you nothing about what the model actually decided &mdash; or how many alternatives it explored before committing.</p>
+
+  <p>An 8-million-token session and a 4-million-token session could contain the same number of decisions. Or a session could burn 12 million tokens and commit to nothing. Token counts measure volume. They don't measure structure. The missing layer is <span class="highlight">decision boundaries</span> &mdash; when did the model converge, and how wide did it search before it got there?</p>
+
+  <p>If <a href="/blog/decision-economics">tokens are decision receipts</a>, we're reading the total at the bottom. We haven't looked at the line items.</p>
+
+  <span class="stat">8.4M reasoning tokens &rarr; 4 decisions<em>Average 2.1M tokens per commitment &mdash; the cost of convergence, not generation</em></span>
+
+  <h2>Decision boundaries</h2>
+
+  <p>Somewhere inside every reasoning session, the model stops exploring and starts executing. It shifts from comparing architectures to writing one. From generating hypotheses to testing a specific approach. That transition is a <span class="highlight">decision commit</span> &mdash; the moment exploration collapses into a single path.</p>
+
+  <p>A real session doesn't contain one decision. It contains a sequence of them, separated by stretches of exploration. The pattern looks something like: explore for 1.2 million tokens, commit, implement for 400K, explore again for 2.2 million, commit again. The implementation phases are cheap. The exploration phases are where the tokens go.</p>
+
+  <p>No model currently emits an explicit decision signal. There is no <span class="highlight">DECISION_COMMIT</span> marker in the token stream. But the boundary is detectable. Reasoning entropy drops. The model shifts from generating questions to generating code. Hypothesis branching narrows. The signals are indirect, but they're consistent &mdash; and they're already measurable from the outside, without access to model internals.</p>
+
+  <p>This is the metric that <a href="/blog/decision-economics">Decision Economics</a> pointed toward but couldn't yet deliver: <span class="highlight">cost per decision</span>. Not cost per token. Not cost per line of code. The cost of each intellectual commitment the system made on your behalf.</p>
+
+  <span class="stat">Total tokens: 14.2M &mdash; Decisions: 7<em>Cost per decision: ~2M tokens &mdash; a KPI that doesn't exist in any dashboard yet</em></span>
+
+  <h2>The invisible variable</h2>
+
+  <p>Decision boundaries tell you <em>when</em> the model committed. They don't tell you <em>how hard</em> it searched before committing. Two sessions can each burn 8 million reasoning tokens and arrive at the same decision count, but one explored two approaches while the other explored seven.</p>
+
+  <p>Reasoning is a tree, not a line. When a model works through an architecture problem, it doesn't follow a single path. It considers approach A with a Redis cache, approach A with Postgres, approach B using event sourcing, approach C with a message queue. Then it eliminates most of them. We see the surviving branch. The exploration width is invisible.</p>
+
+  <p>This hidden variable is the <span class="highlight">branch factor</span> &mdash; how many alternatives the model evaluated before converging. It explains why identical token costs can produce wildly different reasoning quality.</p>
+
+  <p>A session with a branch factor of 2 explored narrowly and converged quickly. Efficient, but possibly premature &mdash; it may have missed better approaches. A session with a branch factor of 7 explored the design space thoroughly but burned three times the tokens doing it. Both show the same number on your bill. One was an efficient search. The other was thrashing.</p>
+
+  <blockquote>Same cost. Completely different reasoning. Token bills hide the shape of exploration.</blockquote>
+
+  <p>Thrashing looks like a branch factor above 6 &mdash; the model keeps reconsidering architecture without committing. Premature convergence looks like a branch factor near 1 &mdash; it locked in the first approach without considering alternatives. Healthy exploration sits between 2 and 4: enough breadth to find the right solution, enough discipline to stop searching.</p>
+
+  <h2>What decision telemetry looks like</h2>
+
+  <p>Combine decision boundaries with branch factor and the session dashboard changes fundamentally. Instead of token counts and cost summaries, it shows the structure of reasoning.</p>
+
+  <blockquote>Tokens: reasoning 8.4M, output 620K. Reasoning tree: avg branch factor 3.1, max 7, depth 14. Decisions: 4 commits, avg 2.1M tokens to commit, largest exploration 3.4M. Compactions: 3 events, 2.1M tokens dropped.</blockquote>
+
+  <p>New metrics follow from this structure. <span class="highlight">Decision density</span>: decisions per million tokens &mdash; how efficiently the session produced commitments. <span class="highlight">Exploration cost</span>: tokens burned before the first commit &mdash; the price of initial orientation. <span class="highlight">Thrash index</span>: exploration tokens divided by implementation tokens &mdash; whether the model is converging or spinning.</p>
+
+  <p>And the unified metric that ties them together:</p>
+
+  <span class="stat">Decision Efficiency = decisions / (tokens &times; branch factor)<em>Not "how much did you spend" but "how efficiently did the system decide"</em></span>
+
+  <p>This is not theoretical. The individual signals &mdash; entropy shifts, code generation transitions, hypothesis narrowing &mdash; are already observable in session telemetry. The model doesn't need to expose its internal reasoning tree. Aggregated metrics like average branch factor are safe to surface: they reveal the shape of exploration without exposing proprietary chain-of-thought internals.</p>
+
+  <p>The moment companies start tracking decision boundaries and branch factor, engineering dashboards stop looking like CPU monitoring and start looking like research lab notebooks. That's a fundamental shift &mdash; from measuring compute to measuring cognition.</p>
+
+  <h2>Why this keeps happening</h2>
+
+  <p>This architecture &mdash; intent declaration, decision runtime, risk enforcement, execution &mdash; is not new. It appears independently in every domain where automation outpaces human reasoning.</p>
+
+  <p>NASA mission control built it in the 1960s. Decisions under uncertainty during spaceflight were too expensive to make without traceability, so they instrumented the decision process itself: problem statement, options evaluated, tradeoffs compared, final commitment logged. The Apollo 13 recovery wasn't saved by telemetry about fuel or temperature. It was saved by the decision log &mdash; knowing which options had been considered, which rejected, and why.</p>
+
+  <p>High-frequency trading firms built it in the 2000s. When algorithms can execute thousands of trades per second, the risk isn't computation &mdash; it's an unsafe decision propagating instantly. So they added strategy definition, decision monitoring, and execution gates. Every order passes through hard risk controls before it reaches the exchange. Knight Capital lost $440 million in 45 minutes when this layer failed.</p>
+
+  <p>Kubernetes built it in 2014. Desired state declared as a spec. Controllers continuously evaluating drift between spec and reality. Admission controllers enforcing policy before anything executes. Observability across the entire runtime.</p>
+
+  <p>The pattern is always the same: <span class="highlight">intent &rarr; decision runtime &rarr; risk enforcement &rarr; execution &rarr; verification</span>. Different domains, different decades, identical architecture. Not because they copied each other, but because the problem shape demands it. Any system where automation outpaces human review eventually builds decision governance.</p>
+
+  <p>AI-assisted engineering is the latest domain to hit this threshold. Agents produce decisions faster than developers can review them. Context windows decay. Reasoning drifts. Actions compound. The first generation of developer tooling measured what you built &mdash; lines of code, test coverage, deployment frequency. The next generation will measure <span class="highlight">how you decided to build it</span>.</p>
+
+  <div class="tool-link">
+    <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>
+    <p>Session-level reasoning telemetry &mdash; decision boundaries, exploration cost, and reasoning structure. Instruments what token bills summarize. Open source, MIT licensed.</p>
+  </div>
+
+  <div class="footer">
+    <a href="/">Obsta Labs</a>
+    <span>/</span>
+    <a href="https://github.com/ppiankov">GitHub</a>
+    <span>/</span>
+    <a href="mailto:hello@obstalabs.dev">Contact</a>
+  </div>
+
+</body>
+</html>
