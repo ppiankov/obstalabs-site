@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Token Bill Is a Decision Receipt — Obsta Labs</title>
+  <meta name="description" content="AI collapsed the cost of writing code. It did not collapse the cost of knowing what to write. Engineering is shifting from compute budgets to decision budgets.">
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Your Token Bill Is a Decision Receipt">
+  <meta property="og:description" content="AI collapsed the cost of writing code. It did not collapse the cost of knowing what to write. Engineering is shifting from compute budgets to decision budgets.">
+  <meta property="og:url" content="https://obstalabs.dev/blog/decision-economics">
+  <meta property="og:site_name" content="Obsta Labs">
+  <!-- Twitter/X -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Your Token Bill Is a Decision Receipt">
+  <meta name="twitter:description" content="AI collapsed the cost of writing code. It did not collapse the cost of knowing what to write.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0E1116;
+      color: #CDD6E0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.3; }
+    h2 { font-size: 1.1rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    p { margin-bottom: 1rem; color: #CDD6E0; }
+    a { color: #CDD6E0; }
+    .meta { color: #7C8590; font-size: 0.85rem; margin-bottom: 2rem; }
+    .back { color: #7C8590; font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid transparent; display: inline-block; margin-bottom: 2rem; }
+    .back:hover { border-bottom-color: #7C8590; }
+    .highlight { color: #E6EDF3; }
+    .stat { font-size: 1.2rem; font-weight: 600; color: #E6EDF3; display: block; margin: 1.5rem 0; padding: 1rem; border-left: 2px solid #3B414A; }
+    .stat em { color: #7C8590; font-weight: 400; font-style: normal; font-size: 0.9rem; display: block; margin-top: 0.25rem; }
+    blockquote { border-left: 2px solid #3B414A; padding-left: 1rem; color: #7C8590; margin: 1.5rem 0; font-style: italic; }
+    .tool-link { margin-top: 2.5rem; padding: 1.25rem; border: 1px solid #3B414A; border-radius: 4px; }
+    .tool-link a { font-weight: 600; text-decoration: none; border-bottom: 1px solid #3B414A; }
+    .tool-link a:hover { border-bottom-color: #7C8590; }
+    .tool-link p { color: #7C8590; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 0; }
+    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #3B414A; }
+    .footer a { color: #7C8590; font-size: 0.85rem; text-decoration: none; border-bottom: 1px solid transparent; }
+    .footer a:hover { border-bottom-color: #7C8590; }
+    .footer span { color: #3B414A; margin: 0 0.5rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="back">&larr; Obsta Labs</a>
+
+  <h1>Your Token Bill Is a Decision Receipt</h1>
+  <p class="meta">March 2026 &middot; Obsta Labs</p>
+
+  <p>Your AI token bill is not a compute cost. It is the price of discovering the correct solution.</p>
+
+  <p>AI collapsed the cost of writing code. It did not collapse the cost of knowing <em>what</em> to write. Once a model understands the solution, producing it is cheap. The expensive part is the exploration, the dead ends, the architectural pivots, the 40-turn investigation that narrows six approaches down to one.</p>
+
+  <p>That's not compute. That's decision-making. And for the first time, we can measure it.</p>
+
+  <span class="stat">14.2M reasoning tokens to produce 4,712 lines of code<em>3,021 tokens per line &mdash; the cost of discovering the solution, not typing it</em></span>
+
+  <h2>Three eras of engineering economics</h2>
+
+  <p><span class="highlight">Era 1: Hardware.</span> The scarce resource was physical. Engineering questions sounded like: "Can we run this on 64MB?" "How many nodes do we need?" The budget tracked machines.</p>
+
+  <p><span class="highlight">Era 2: Cloud.</span> Abstracted the hardware, kept the same model. Dashboards tracked CPU%, memory, latency, cost per request. The budget still tracked compute &mdash; just rented.</p>
+
+  <p><span class="highlight">Era 3: Decisions.</span> LLMs collapsed the cost of execution. Code production became cheap. The expensive part became reasoning: exploring the design space, testing hypotheses, iterating architecture. The budget now tracks decisions.</p>
+
+  <h2>The inversion</h2>
+
+  <p>For most of software history, ideas were cheap and implementation was expensive. A whiteboard sketch took 20 minutes. Building it took six months.</p>
+
+  <p>AI reversed this. Implementation is increasingly cheap. What's expensive is figuring out the right thing to build. The reasoning tokens your model burns while circling an architecture decision, comparing tradeoffs, invalidating approaches &mdash; that's the real cost. The code it writes afterward is a rounding error.</p>
+
+  <span class="stat">The most expensive tokens in a project are the early ones.<em>The first 5M tokens produced almost no code &mdash; but created the compression that enabled everything after.</em></span>
+
+  <h2>Tokens are a decision proxy</h2>
+
+  <p>Tokens represent exploration, hypothesis testing, architecture changes, reasoning iterations. They are the first measurable proxy for thinking effort in engineering.</p>
+
+  <p>Traditional metrics measure artifacts: LOC, complexity, latency. They tell you what was built and how it performs. They say nothing about the cost of arriving at the idea.</p>
+
+  <p>New metrics measure decisions: <span class="highlight">tokens per LOC</span> (decision density), <span class="highlight">cost per decision</span> (price of each commitment), <span class="highlight">exploration ratio</span> (discovery vs. execution). These measure something previously invisible: how much thinking was required to reach the correct answer.</p>
+
+  <h2>Decision budgets</h2>
+
+  <p>Teams already budget for servers, clusters, and bandwidth. The next budget line is reasoning.</p>
+
+  <blockquote>Decision Budget: 50M tokens. Exploration: 18M. Implementation: 25M. Refinement: 7M.</blockquote>
+
+  <p>This is not speculation. It is what token-level session instrumentation already shows. Projects have distinct reasoning phases &mdash; exploration, stabilization, execution &mdash; with measurably different token economics. Exploration burns tokens fast with low code output. Execution converts tokens to code efficiently. The transition between them is where tooling matters.</p>
+
+  <h2>What changes</h2>
+
+  <p>When you stop framing AI costs as compute and start framing them as decisions, different questions appear:</p>
+
+  <p>Not "how do we reduce token usage?" but <span class="highlight">"how do we reach decisions faster?"</span></p>
+
+  <p>Not "how do we make the model cheaper?" but <span class="highlight">"how do we reduce wasted exploration?"</span></p>
+
+  <p>Not "how big should the context window be?" but <span class="highlight">"how do we preserve decision quality across sessions?"</span></p>
+
+  <p>The tooling that follows from this framing looks like decision infrastructure: serializing intent before execution, maintaining reasoning stability during long sessions, tracking which tokens contributed to commitments and which were noise.</p>
+
+  <p>That's not prompt engineering. That's the beginning of <span class="highlight">decision economics</span> &mdash; the discipline of optimizing how humans and AI reach correct solutions together.</p>
+
+  <div class="tool-link">
+    <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>
+    <p>Session instrumentation for Claude Code. See where reasoning tokens go, what they cost, and which ones produced decisions. Open source, MIT licensed.</p>
+  </div>
+
+  <div class="footer">
+    <a href="/">Obsta Labs</a>
+    <span>/</span>
+    <a href="https://github.com/ppiankov">GitHub</a>
+    <span>/</span>
+    <a href="mailto:hello@obstalabs.dev">Contact</a>
+  </div>
+
+</body>
+</html>
