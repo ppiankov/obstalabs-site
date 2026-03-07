@@ -52,6 +52,7 @@
   <a href="/" class="back">&larr; Obsta Labs</a>
 
   <h1>Your Token Bill Is a Decision Receipt</h1>
+  <p class="meta">AI didn't eliminate engineering cost. It moved it from execution to discovery.</p>
   <p class="meta">March 2026 &middot; Obsta Labs</p>
 
   <p>Your AI token bill is not a compute cost. It is the price of discovering the correct solution.</p>
@@ -60,7 +61,7 @@
 
   <p>That's not compute. That's decision-making. And for the first time, we can measure it.</p>
 
-  <span class="stat">14.2M reasoning tokens to produce 4,712 lines of code<em>3,021 tokens per line &mdash; the cost of discovering the solution, not typing it</em></span>
+  <span class="stat">14.2M reasoning tokens &rarr; 4,712 lines of code<em>3,021 tokens per line &mdash; the cost of discovering the solution, not typing it</em></span>
 
   <h2>Three eras of engineering economics</h2>
 
@@ -68,7 +69,7 @@
 
   <p><span class="highlight">Era 2: Cloud.</span> Abstracted the hardware, kept the same model. Dashboards tracked CPU%, memory, latency, cost per request. The budget still tracked compute &mdash; just rented.</p>
 
-  <p><span class="highlight">Era 3: Decisions.</span> LLMs collapsed the cost of execution. Code production became cheap. The expensive part became reasoning: exploring the design space, testing hypotheses, iterating architecture. The budget now tracks decisions.</p>
+  <p><span class="highlight">Era 3: Decisions.</span> LLMs collapsed the cost of execution. Code production became cheap. The scarce resource became reasoning: exploring the design space, testing hypotheses, iterating architecture. The budget now tracks decisions.</p>
 
   <h2>The inversion</h2>
 
@@ -80,7 +81,7 @@
 
   <h2>Tokens are a decision proxy</h2>
 
-  <p>Tokens represent exploration, hypothesis testing, architecture changes, reasoning iterations. They are the first measurable proxy for thinking effort in engineering.</p>
+  <p>Tokens represent exploration: hypothesis testing, architecture comparisons, dead ends, and reasoning iterations. They are the first measurable proxy for thinking effort in engineering.</p>
 
   <p>Traditional metrics measure artifacts: LOC, complexity, latency. They tell you what was built and how it performs. They say nothing about the cost of arriving at the idea.</p>
 
@@ -88,7 +89,7 @@
 
   <h2>Decision budgets</h2>
 
-  <p>Teams already budget for servers, clusters, and bandwidth. The next budget line is reasoning.</p>
+  <p>If tokens measure reasoning, then projects now have a new budget line: decisions.</p>
 
   <blockquote>Decision Budget: 50M tokens. Exploration: 18M. Implementation: 25M. Refinement: 7M.</blockquote>
 
@@ -106,11 +107,11 @@
 
   <p>The tooling that follows from this framing looks like decision infrastructure: serializing intent before execution, maintaining reasoning stability during long sessions, tracking which tokens contributed to commitments and which were noise.</p>
 
-  <p>That's not prompt engineering. That's the beginning of <span class="highlight">decision economics</span> &mdash; the discipline of optimizing how humans and AI reach correct solutions together.</p>
+  <p>That's not prompt engineering. It's the beginning of <span class="highlight">decision economics</span> &mdash; the discipline of optimizing how humans and AI reach correct solutions together.</p>
 
   <div class="tool-link">
     <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>
-    <p>Session instrumentation for Claude Code. See where reasoning tokens go, what they cost, and which ones produced decisions. Open source, MIT licensed.</p>
+    <p>Instruments reasoning sessions &mdash; showing where tokens go, what they cost, and which ones actually produced decisions. Open source, MIT licensed.</p>
   </div>
 
   <div class="footer">
