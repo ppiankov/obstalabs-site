@@ -63,6 +63,8 @@
 
   <span class="stat">14.2M reasoning tokens &rarr; 4,712 lines of code<em>3,021 tokens per line &mdash; the cost of discovering the solution, not typing it</em></span>
 
+  <p>Most of those tokens were not spent writing code. They were spent comparing architectures, testing approaches, rejecting dead ends, and converging on a final design. Once the solution was understood, producing the code took a fraction of the total.</p>
+
   <h2>Three eras of engineering economics</h2>
 
   <p><span class="highlight">Era 1: Hardware.</span> The scarce resource was physical. Engineering questions sounded like: "Can we run this on 64MB?" "How many nodes do we need?" The budget tracked machines.</p>
@@ -79,13 +81,15 @@
 
   <span class="stat">The most expensive tokens in a project are the early ones.<em>The first 5M tokens produced almost no code &mdash; but created the compression that enabled everything after.</em></span>
 
+  <p>Early exploration often looks inefficient. It produces little code while the system probes the design space. But those tokens are not waste &mdash; they are the cost of narrowing many possibilities down to one viable architecture.</p>
+
   <h2>Tokens are a decision proxy</h2>
 
-  <p>Tokens represent exploration: hypothesis testing, architecture comparisons, dead ends, and reasoning iterations. They are the first measurable proxy for thinking effort in engineering.</p>
+  <p>Tokens are not a perfect measure of thinking. But they are the first measurable proxy we have for exploration, hypothesis testing, and architectural iteration during AI-assisted development. Design and exploration always existed in software engineering. What changed is that AI systems expose the reasoning process in measurable units.</p>
 
   <p>Traditional metrics measure artifacts: LOC, complexity, latency. They tell you what was built and how it performs. They say nothing about the cost of arriving at the idea.</p>
 
-  <p>New metrics measure decisions: <span class="highlight">tokens per LOC</span> (decision density), <span class="highlight">cost per decision</span> (price of each commitment), <span class="highlight">exploration ratio</span> (discovery vs. execution). These measure something previously invisible: how much thinking was required to reach the correct answer.</p>
+  <p>Tokens don't measure the intrinsic difficulty of a problem. They measure the cost of discovering a solution within a given system of humans, tools, and models. New metrics make this visible: <span class="highlight">tokens per LOC</span> (decision density), <span class="highlight">cost per decision</span> (price of each commitment), <span class="highlight">exploration ratio</span> (discovery vs. execution).</p>
 
   <h2>Decision budgets</h2>
 
