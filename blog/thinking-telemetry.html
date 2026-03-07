@@ -57,7 +57,7 @@
 
   <p>Your session telemetry shows tokens in, tokens out, total cost. That's accounting. It tells you nothing about what the model actually decided &mdash; or how many alternatives it explored before committing.</p>
 
-  <p>An 8-million-token session and a 4-million-token session could contain the same number of decisions. Or a session could burn 12 million tokens and commit to nothing. Token counts measure volume. They don't measure structure. The missing layer is <span class="highlight">decision boundaries</span> &mdash; when did the model converge, and how wide did it search before it got there?</p>
+  <p>An 8-million-token session and a 4-million-token session might contain the same number of decisions. Or a session could burn 12 million tokens and commit to nothing. Token counts measure volume. They don't measure structure. The missing layer is <span class="highlight">decision boundaries</span> &mdash; when did the model converge, and how wide did it search before it got there?</p>
 
   <p>If <a href="/blog/decision-economics">tokens are decision receipts</a>, we're reading the total at the bottom. We haven't looked at the line items.</p>
 
@@ -73,7 +73,7 @@
 
   <p>This is the metric that <a href="/blog/decision-economics">Decision Economics</a> pointed toward but couldn't yet deliver: <span class="highlight">cost per decision</span>. Not cost per token. Not cost per line of code. The cost of each intellectual commitment the system made on your behalf.</p>
 
-  <span class="stat">Total tokens: 14.2M &mdash; Decisions: 7<em>Cost per decision: ~2M tokens &mdash; a KPI that doesn't exist in any dashboard yet</em></span>
+  <span class="stat">Total tokens: 14.2M &rarr; Decisions: 7<em>~2M tokens per commitment &mdash; a KPI no dashboard tracks yet</em></span>
 
   <h2>The invisible variable</h2>
 
@@ -95,7 +95,7 @@
 
   <blockquote>Tokens: reasoning 8.4M, output 620K. Reasoning tree: avg branch factor 3.1, max 7, depth 14. Decisions: 4 commits, avg 2.1M tokens to commit, largest exploration 3.4M. Compactions: 3 events, 2.1M tokens dropped.</blockquote>
 
-  <p>New metrics follow from this structure. <span class="highlight">Decision density</span>: decisions per million tokens &mdash; how efficiently the session produced commitments. <span class="highlight">Exploration cost</span>: tokens burned before the first commit &mdash; the price of initial orientation. <span class="highlight">Thrash index</span>: exploration tokens divided by implementation tokens &mdash; whether the model is converging or spinning.</p>
+  <p>Once reasoning structure is visible, new metrics appear naturally. <span class="highlight">Decision density</span>: decisions per million tokens &mdash; how efficiently the session produced commitments. <span class="highlight">Exploration cost</span>: tokens burned before the first commit &mdash; the price of initial orientation. <span class="highlight">Thrash index</span>: exploration tokens divided by implementation tokens &mdash; whether the model is converging or spinning.</p>
 
   <p>And the unified metric that ties them together:</p>
 
@@ -121,7 +121,7 @@
 
   <div class="tool-link">
     <a href="https://github.com/ppiankov/contextspectre">ContextSpectre</a>
-    <p>Session-level reasoning telemetry &mdash; decision boundaries, exploration cost, and reasoning structure. Instruments what token bills summarize. Open source, MIT licensed.</p>
+    <p>Session-level reasoning telemetry &mdash; decision boundaries, exploration cost, and reasoning structure. Instruments the reasoning structure that token bills summarize. Open source, MIT licensed.</p>
   </div>
 
   <div class="footer">
